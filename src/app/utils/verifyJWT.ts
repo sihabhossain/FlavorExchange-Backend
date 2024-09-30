@@ -4,13 +4,6 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import AppError from '../errors/AppError';
 import { USER_ROLE, USER_STATUS } from '../modules/User/user.constant';
 
-// _id: user._id,
-//     name: user.name,
-//     email: user.email,
-//     mobileNumber: user.mobileNumber,
-//     role: user.role,
-//     status: user.status,
-
 export const createToken = (
   jwtPayload: {
     _id?: string;
@@ -33,8 +26,11 @@ export const verifyToken = (
   secret: string
 ): JwtPayload | Error => {
   try {
+    console.log('Token:', token); // Log the token
+    console.log('Secret:', secret); // Log the secret
     return jwt.verify(token, secret) as JwtPayload;
   } catch (error: any) {
+    console.error('JWT verification error:', error.message); // Log the exact error
     throw new AppError(401, 'You are not authorized!');
   }
 };

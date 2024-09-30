@@ -5,10 +5,8 @@ import { RecipeServices } from './recipe.service';
 
 const createRecipe = catchAsync(async (req, res) => {
   // Directly use the request body
-  const recipe = await RecipeServices.createRecipe({
-    ...req.body,
-    userId: req.user.id,
-  });
+
+  const recipe = await RecipeServices.createRecipe(req.body);
 
   sendResponse(res, {
     success: true,

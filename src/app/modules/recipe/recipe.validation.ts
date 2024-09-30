@@ -14,7 +14,12 @@ const baseRecipeSchema = z.object({
   userId: z.string().nonempty('User ID is required'),
   ratings: z.array(z.number().min(1).max(5)).optional(),
   comments: z.array(z.string()).optional(),
-  createdAt: z.date().optional(),
+  createdAt: z
+    .preprocess(
+      (value) => (typeof value === 'string' ? new Date(value) : value),
+      z.date()
+    )
+    .optional(),
 });
 
 // Create recipe validation schema
