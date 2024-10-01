@@ -38,3 +38,41 @@ router.delete(
   auth(USER_ROLE.USER), // Adjust role as needed
   RecipeControllers.deleteRecipe
 );
+
+// Upvote a recipe (authenticated users)
+router.post(
+  '/:id/upvote',
+  auth(USER_ROLE.USER), // Adjust role as needed
+  RecipeControllers.upvoteRecipe
+);
+
+// Downvote a recipe (authenticated users)
+router.post(
+  '/:id/downvote',
+  auth(USER_ROLE.USER), // Adjust role as needed
+  RecipeControllers.downvoteRecipe
+);
+
+// Rate a recipe (authenticated users)
+router.post('/:id/rate', auth(USER_ROLE.USER), RecipeControllers.rateRecipe);
+
+// Add a comment to a recipe (authenticated users)
+router.post(
+  '/:id/comment',
+  auth(USER_ROLE.USER),
+  RecipeControllers.addCommentToRecipe
+);
+
+// Edit a comment in a recipe (authenticated users)
+router.put(
+  '/:id/comment/:commentId',
+  auth(USER_ROLE.USER),
+  RecipeControllers.editCommentInRecipe
+);
+
+// Delete a comment from a recipe (authenticated users)
+router.delete(
+  '/:id/comment/:commentId',
+  auth(USER_ROLE.USER),
+  RecipeControllers.deleteCommentInRecipe
+);
