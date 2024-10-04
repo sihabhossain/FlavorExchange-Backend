@@ -26,11 +26,9 @@ export const verifyToken = (
   secret: string
 ): JwtPayload | Error => {
   try {
-    console.log('Token:', token); // Log the token
-    console.log('Secret:', secret); // Log the secret
     return jwt.verify(token, secret) as JwtPayload;
   } catch (error: any) {
-    console.error('JWT verification error:', error.message); // Log the exact error
+    console.error('JWT verification error:', error.message);
     throw new AppError(401, 'You are not authorized!');
   }
 };

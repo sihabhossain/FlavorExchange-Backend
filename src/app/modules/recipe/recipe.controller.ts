@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { catchAsync } from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { RecipeServices } from './recipe.service';
+import AppError from '../../errors/AppError';
 
 const createRecipe = catchAsync(async (req: Request, res: Response) => {
   const recipe = await RecipeServices.createRecipe(req.body);
@@ -16,6 +17,24 @@ const createRecipe = catchAsync(async (req: Request, res: Response) => {
 
 const getAllRecipes = catchAsync(async (req: Request, res: Response) => {
   const recipes = await RecipeServices.getAllRecipesFromDB();
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Recipes fetched successfully',
+    data: recipes,
+  });
+});
+
+const getMyRecipes = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.params?.id;
+
+  console.log(userId);
+  if (!userId) {
+    throw new AppError(400, 'User not found or invalid token');
+  }
+
+  const recipes = await RecipeServices.getUserRecipesFromDB(userId);
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -237,4 +256,5 @@ export const RecipeControllers = {
   addCommentToRecipe,
   editCommentInRecipe,
   deleteCommentInRecipe,
+  getMyRecipes,
 };

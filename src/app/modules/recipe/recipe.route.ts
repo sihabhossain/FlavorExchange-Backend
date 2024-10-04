@@ -24,10 +24,12 @@ router.get('/', RecipeControllers.getAllRecipes);
 // Get a single recipe by ID (public access)
 router.get('/:id', RecipeControllers.getRecipeById);
 
+router.get('/my-recipe/:id', RecipeControllers.getMyRecipes);
+
 // Update a recipe by ID (authenticated users)
 router.put(
   '/:id',
-  auth(USER_ROLE.USER), // Adjust role as needed
+  auth(USER_ROLE.USER),
   validateRequest(RecipeValidation.updateRecipeValidationSchema),
   RecipeControllers.updateRecipe
 );
