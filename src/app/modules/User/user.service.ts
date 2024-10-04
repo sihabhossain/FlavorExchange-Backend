@@ -28,8 +28,46 @@ const getSingleUserFromDB = async (id: string) => {
   return user;
 };
 
+const followUser = async (followerId: string, followingId: string) => {
+  // Increment followersCount for the following user
+  const followedUser = await User.findByIdAndUpdate(
+    followingId,
+    { $inc: { followersCount: 1 } },
+    { new: true }
+  );
+
+  // Increment followingCount for the follower user
+  const followerUser = await User.findByIdAndUpdate(
+    followerId,
+    { $inc: { followingCount: 1 } },
+    { new: true }
+  );
+
+  return { followedUser, followerUser };
+};
+
+const unfollowUser = async (followerId: string, followingId: string) => {
+  // Decrement followersCount for the following user
+  const unfollowedUser = await User.findByIdAndUpdate(
+    followingId,
+    { $inc: { followersCount: -1 } },
+    { new: true }
+  );
+
+  // Decrement followingCount for the follower user
+  const unfollowerUser = await User.findByIdAndUpdate(
+    followerId,
+    { $inc: { followingCount: -1 } },
+    { new: true }
+  );
+
+  return { unfollowedUser, unfollowerUser };
+};
+
 export const UserServices = {
   createUser,
   getAllUsersFromDB,
   getSingleUserFromDB,
+  followUser, // Add this line
+  unfollowUser, // Add this line
 };

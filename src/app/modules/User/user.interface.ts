@@ -12,6 +12,9 @@ export type TUser = {
   passwordChangedAt?: Date;
   mobileNumber?: string;
   profilePhoto?: string;
+  isPremium?: string;
+  followersCount?: number;
+  followingCount?: number;
   createdAt?: Date;
   updatedAt?: Date;
 };

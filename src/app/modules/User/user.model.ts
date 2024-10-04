@@ -44,7 +44,22 @@ const userSchema = new Schema<TUser, IUserModel>(
     },
     profilePhoto: {
       type: String,
-      default: null
+      default: null,
+    },
+    isPremium: {
+      // New field for premium status
+      type: Boolean,
+      default: false, // Default to false
+    },
+    followersCount: {
+      // New field for followers count
+      type: Number,
+      default: 0, // Default to 0
+    },
+    followingCount: {
+      // New field for following count
+      type: Number,
+      default: 0, // Default to 0
     },
   },
   {

@@ -17,3 +17,5 @@ router.post(
 );
 router.get('/', UserControllers.getAllUsers);
 router.get('/:id', UserControllers.getSingleUser);
+router.post('/follow', auth(USER_ROLE.USER), UserControllers.followUser);
+router.post('/unfollow', auth(USER_ROLE.USER), UserControllers.unfollowUser);

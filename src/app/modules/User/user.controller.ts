@@ -36,8 +36,38 @@ const getSingleUser = catchAsync(async (req, res) => {
   });
 });
 
+const followUser = catchAsync(async (req, res) => {
+  const { followingId } = req.body; // Expecting body to have followingId
+  const followerId = req.user.id; // Assuming user ID is available in req.user
+
+  const result = await UserServices.followUser(followerId, followingId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User followed successfully',
+    data: result,
+  });
+});
+
+const unfollowUser = catchAsync(async (req, res) => {
+  const { followingId } = req.body; // Expecting body to have followingId
+  const followerId = req.user.id; // Assuming user ID is available in req.user
+
+  const result = await UserServices.unfollowUser(followerId, followingId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User unfollowed successfully',
+    data: result,
+  });
+});
+
 export const UserControllers = {
   getSingleUser,
   userRegister,
   getAllUsers,
+  followUser,
+  unfollowUser,
 };
