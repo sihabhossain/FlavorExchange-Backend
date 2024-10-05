@@ -28,6 +28,10 @@ const registerUser = async (payload: TRegisterUser) => {
     name: newUser.name,
     email: newUser.email,
     mobileNumber: newUser.mobileNumber,
+    profilePhoto: newUser.profilePhoto,
+    isPreium: newUser.isPremium,
+    followersCount: newUser.followingCount,
+    followingCount: newUser.followingCount,
     role: newUser.role,
     status: newUser.status,
   };
@@ -77,6 +81,10 @@ const loginUser = async (payload: TLoginUser) => {
     name: user.name,
     email: user.email,
     mobileNumber: user.mobileNumber,
+    profilePhoto: user.profilePhoto,
+    isPreium: user.isPremium,
+    followersCount: user.followingCount,
+    followingCount: user.followingCount,
     role: user.role,
     status: user.status,
   };
@@ -155,6 +163,8 @@ const refreshToken = async (token: string) => {
   // checking if the user is exist
   const user = await User.isUserExistsByEmail(email);
 
+  console.log(user);
+
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!');
   }
@@ -178,6 +188,10 @@ const refreshToken = async (token: string) => {
     name: user.name,
     email: user.email,
     mobileNumber: user.mobileNumber,
+    profilePhoto: user.profilePhoto,
+    isPreium: user.isPremium,
+    followersCount: user.followingCount,
+    followingCount: user.followingCount,
     role: user.role,
     status: user.status,
   };
