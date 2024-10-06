@@ -1,5 +1,5 @@
 // recipe.interface.ts
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 export interface IRating {
   userId: string;
@@ -19,7 +19,7 @@ export interface IRecipe extends Document {
   ingredients: string[];
   instructions: string;
   image?: string | null;
-  userId: string;
+  userId: ObjectId;
   upvotes: number;
   downvotes: number;
   ratings: IRating[];

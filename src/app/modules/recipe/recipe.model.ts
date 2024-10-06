@@ -20,7 +20,7 @@ const RecipeSchema = new Schema<IRecipe>({
   ingredients: { type: [String], required: true },
   instructions: { type: String, required: true },
   image: { type: String, default: null },
-  userId: { type: String, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   upvotes: { type: Number, default: 0 },
   downvotes: { type: Number, default: 0 },
   ratings: { type: [RatingSchema], default: [] },

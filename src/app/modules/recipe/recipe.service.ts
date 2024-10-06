@@ -8,9 +8,10 @@ const createRecipe = async (payload: IRecipe) => {
   return recipe;
 };
 
-// Get all recipes from the database
 const getAllRecipesFromDB = async () => {
-  return await Recipe.find();
+  // Fetch recipes and populate the 'userId' with user details (name, email)
+  const recipes = await Recipe.find().populate('userId').exec();
+  return recipes;
 };
 
 // Fetch recipes by user ID (My Recipes)
