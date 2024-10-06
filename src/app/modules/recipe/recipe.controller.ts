@@ -160,7 +160,7 @@ const rateRecipe = catchAsync(async (req: Request, res: Response) => {
 
 // Add a comment to a recipe
 const addCommentToRecipe = catchAsync(async (req: Request, res: Response) => {
-  const commentData = req.body; // Expecting { userId: string, comment: string }
+  const commentData = req.body;
   const recipe = await RecipeServices.addCommentToRecipe(
     req.params.id,
     commentData

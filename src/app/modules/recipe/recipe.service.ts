@@ -9,8 +9,13 @@ const createRecipe = async (payload: IRecipe) => {
 };
 
 const getAllRecipesFromDB = async () => {
-  // Fetch recipes and populate the 'userId' with user details (name, email)
-  const recipes = await Recipe.find().populate('userId').exec();
+  const recipes = await Recipe.find()
+    .populate('userId')
+    .populate({
+      path: 'comments.userId',
+    })
+    .exec();
+
   return recipes;
 };
 
@@ -97,7 +102,7 @@ const addCommentToRecipe = async (
   if (!recipe) return null;
 
   const newComment = {
-    id: new mongoose.Types.ObjectId().toString(), // Generate a new ID for the comment
+    id: new mongoose.Types.ObjectId().toString(),
     userId: commentData.userId,
     comment: commentData.comment,
     createdAt: new Date(),

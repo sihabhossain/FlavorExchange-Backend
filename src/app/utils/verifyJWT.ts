@@ -11,6 +11,9 @@ export const createToken = (
     email: string;
     mobileNumber?: string;
     profilePhoto?: string;
+    isPremium?: string;
+    followersCount?: number;
+    followingCount?: number;
     role: keyof typeof USER_ROLE;
     status: keyof typeof USER_STATUS;
   },
