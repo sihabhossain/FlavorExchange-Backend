@@ -16,13 +16,12 @@ const getAllRecipesFromDB = async () => {
 
 // Fetch recipes by user ID (My Recipes)
 const getUserRecipesFromDB = async (userId: string) => {
-  console.log(userId);
   return await Recipe.find({ userId });
 };
 
 // Get a recipe by its ID
 const getRecipeByIdFromDB = async (id: string) => {
-  return await Recipe.findById(id);
+  return await Recipe.findById(id).populate('userId').exec();
 };
 
 // Update a recipe by its ID
