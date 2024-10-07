@@ -35,11 +35,7 @@ router.put(
 );
 
 // Delete a recipe by ID (authenticated users)
-router.delete(
-  '/:id',
-  auth(USER_ROLE.USER), // Adjust role as needed
-  RecipeControllers.deleteRecipe
-);
+router.delete('/:id', auth(USER_ROLE.USER), RecipeControllers.deleteRecipe);
 
 // Upvote a recipe (authenticated users)
 router.post(

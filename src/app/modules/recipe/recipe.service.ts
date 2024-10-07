@@ -26,7 +26,12 @@ const getUserRecipesFromDB = async (userId: string) => {
 
 // Get a recipe by its ID
 const getRecipeByIdFromDB = async (id: string) => {
-  return await Recipe.findById(id).populate('userId').exec();
+  return await Recipe.findById(id)
+    .populate('userId')
+    .populate({
+      path: 'comments.userId',
+    })
+    .exec();
 };
 
 // Update a recipe by its ID
