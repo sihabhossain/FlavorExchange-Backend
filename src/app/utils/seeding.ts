@@ -21,6 +21,7 @@ export const seed = async () => {
         password: config.admin_password,
         profilePhoto: config.admin_profile_photo,
         mobileNumber: config.admin_mobile_number,
+        bio: config.admin_bio,
         status: USER_STATUS.ACTIVE,
       });
       console.log('Admin created successfully...');

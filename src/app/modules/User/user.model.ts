@@ -35,6 +35,10 @@ const userSchema = new Schema<TUser, IUserModel>(
       enum: Object.keys(USER_STATUS),
       default: USER_STATUS.ACTIVE,
     },
+    bio: {
+      type: String,
+      required: true,
+    },
     passwordChangedAt: {
       type: Date,
     },
@@ -44,9 +48,13 @@ const userSchema = new Schema<TUser, IUserModel>(
     },
     profilePhoto: {
       type: String,
-      default: null,
     },
     isPremium: {
+      // New field for premium status
+      type: Boolean,
+      default: false, // Default to false
+    },
+    isBlocked: {
       // New field for premium status
       type: Boolean,
       default: false, // Default to false

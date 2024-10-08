@@ -64,10 +64,55 @@ const unfollowUser = catchAsync(async (req, res) => {
   });
 });
 
+const blockUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+
+  // Call the service to update the user's isBlocked status
+  const result = await UserServices.blockUser(userId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User blocked successfully',
+    data: result,
+  });
+});
+
+const deleteUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+
+  // Call the service to delete the user
+  const result = await UserServices.deleteUser(userId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User deleted successfully',
+    data: result,
+  });
+});
+
+const updateUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+  const updateData = req.body;
+
+  const updatedUser = await UserServices.updateUser(userId, updateData);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User updated successfully',
+    data: updatedUser,
+  });
+});
+
 export const UserControllers = {
   getSingleUser,
   userRegister,
   getAllUsers,
   followUser,
   unfollowUser,
+  blockUser,
+  deleteUser,
+  updateUser,
 };

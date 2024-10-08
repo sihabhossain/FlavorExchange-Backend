@@ -64,10 +64,37 @@ const unfollowUser = async (followerId: string, followingId: string) => {
   return { unfollowedUser, unfollowerUser };
 };
 
+const blockUser = async (userId: string) => {
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { isBlocked: true },
+    { new: true }
+  );
+
+  return updatedUser;
+};
+
+const deleteUser = async (userId: string) => {
+  const deletedUser = await User.findByIdAndDelete(userId);
+  return deletedUser;
+};
+
+const updateUser = async (userId: string, updateData: Partial<TUser>) => {
+  const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+    new: true, // Return the updated document
+    runValidators: true, // Ensure that validation rules are respected
+  });
+
+  return updatedUser;
+};
+
 export const UserServices = {
   createUser,
   getAllUsersFromDB,
   getSingleUserFromDB,
   followUser, // Add this line
   unfollowUser, // Add this line
+  blockUser,
+  deleteUser,
+  updateUser,
 };

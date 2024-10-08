@@ -7,6 +7,9 @@ const createUserValidationSchema = z.object({
       required_error: 'Name is required',
     }),
     role: z.nativeEnum(USER_ROLE),
+    bio: z.string({
+      required_error: 'Bio is required',
+    }),
     email: z
       .string({
         required_error: 'Email is required',
@@ -16,6 +19,9 @@ const createUserValidationSchema = z.object({
       }),
     password: z.string({
       required_error: 'Password is required',
+    }),
+    profilePhoto: z.string({
+      required_error: 'Profile is required',
     }),
     status: z.nativeEnum(USER_STATUS).default(USER_STATUS.ACTIVE),
     mobileNumber: z.string().optional(),
@@ -28,6 +34,7 @@ const updateUserValidationSchema = z.object({
     role: z.nativeEnum(USER_ROLE).optional(),
     email: z.string().email().optional(),
     password: z.string().optional(),
+    profilePhoto: z.string().optional(),
     status: z.nativeEnum(USER_STATUS).optional(),
     mobileNumber: z.string().optional(),
   }),

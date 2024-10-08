@@ -13,7 +13,7 @@ export const RecipeRoutes = router;
 // Create a new recipe (authenticated users)
 router.post(
   '/',
-  auth(USER_ROLE.USER), // Adjust role as needed
+  auth(USER_ROLE.USER, USER_ROLE.ADMIN), // Adjust role as needed
   validateRequest(RecipeValidation.createRecipeValidationSchema),
   RecipeControllers.createRecipe
 );
@@ -35,7 +35,11 @@ router.put(
 );
 
 // Delete a recipe by ID (authenticated users)
-router.delete('/:id', auth(USER_ROLE.USER), RecipeControllers.deleteRecipe);
+router.delete(
+  '/:id',
+  auth(USER_ROLE.USER, USER_ROLE.ADMIN),
+  RecipeControllers.deleteRecipe
+);
 
 // Upvote a recipe (authenticated users)
 router.post(

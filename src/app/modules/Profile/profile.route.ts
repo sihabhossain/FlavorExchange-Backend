@@ -8,17 +8,17 @@ import { parseBody } from '../../middlewares/bodyParser';
 const router = express.Router();
 
 router.get(
-    '/',
-    auth(USER_ROLE.ADMIN, USER_ROLE.USER),
-    ProfileController.getMyProfile
+  '/',
+  auth(USER_ROLE.ADMIN, USER_ROLE.USER),
+  ProfileController.getMyProfile
 );
 
 router.patch(
-    '/',
-    auth(USER_ROLE.ADMIN, USER_ROLE.USER),
-    multerUpload.single('profilePhoto'),
-    parseBody,
-    ProfileController.updateMyProfile
-)
+  '/',
+  auth(USER_ROLE.ADMIN, USER_ROLE.USER),
+  multerUpload.single('profilePhoto'),
+  parseBody,
+  ProfileController.updateMyProfile
+);
 
 export const ProfileRoutes = router;

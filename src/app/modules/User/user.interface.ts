@@ -13,6 +13,8 @@ export type TUser = {
   mobileNumber?: string;
   profilePhoto?: string;
   isPremium?: string;
+  isBlocked?: string;
+  bio?: string;
   followersCount?: number;
   followingCount?: number;
   createdAt?: Date;
