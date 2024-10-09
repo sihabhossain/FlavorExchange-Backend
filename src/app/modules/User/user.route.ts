@@ -31,3 +31,9 @@ router.put(
   auth(USER_ROLE.USER, USER_ROLE.ADMIN),
   UserControllers.updateUser
 );
+
+// Stripe Payment Routes
+router.post(
+  '/create-checkout-session',
+  UserControllers.createCheckoutSessionController
+);

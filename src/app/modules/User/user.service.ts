@@ -1,3 +1,4 @@
+import Stripe from 'stripe';
 import { QueryBuilder } from '../../builder/QueryBuilder';
 import { UserSearchableFields } from './user.constant';
 import { TUser } from './user.interface';
@@ -88,6 +89,31 @@ const updateUser = async (userId: string, updateData: Partial<TUser>) => {
   return updatedUser;
 };
 
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+
+if (!stripeSecretKey) {
+  throw new Error('Stripe secret key is not defined in environment variables.');
+}
+
+const stripe = new Stripe(stripeSecretKey);
+
+const createCheckoutSession = async (payload: { priceId: string }) => {
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    line_items: [
+      {
+        price: payload.priceId,
+        quantity: 1,
+      },
+    ],
+    mode: 'payment',
+    success_url: `${process.env.STRIPE_SUCCESS_URL}`,
+    cancel_url: `${process.env.STRIPE_CANCEL_URL}`,
+  });
+
+  return session;
+};
+
 export const UserServices = {
   createUser,
   getAllUsersFromDB,
@@ -97,4 +123,5 @@ export const UserServices = {
   blockUser,
   deleteUser,
   updateUser,
+  createCheckoutSession,
 };
