@@ -22,14 +22,12 @@ const auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
 
     // Extract the token (remove 'Bearer ' part)
     const token = authHeader.split(' ')[1];
-    console.log('Extracted Token:', token);
 
     // Verify the token
     const decoded = verifyToken(
       token,
       config.jwt_access_secret as string
     ) as JwtPayload;
-    console.log('Decoded Token:', decoded);
 
     const { role, email, iat } = decoded;
 

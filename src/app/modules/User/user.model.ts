@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 import bcryptjs from 'bcryptjs';
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import config from '../../config';
 import { USER_ROLE, USER_STATUS } from './user.constant';
 import { IUserModel, TUser } from './user.interface';
@@ -19,7 +19,7 @@ const userSchema = new Schema<TUser, IUserModel>(
     email: {
       type: String,
       required: true,
-      //validate email
+      // validate email
       match: [
         /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
         'Please fill a valid email address',
@@ -50,25 +50,39 @@ const userSchema = new Schema<TUser, IUserModel>(
       type: String,
     },
     isPremium: {
-      // New field for premium status
+      // Field for premium status
       type: Boolean,
       default: false, // Default to false
     },
     isBlocked: {
-      // New field for premium status
+      // Field for block status
       type: Boolean,
       default: false, // Default to false
     },
     followersCount: {
-      // New field for followers count
+      // Field for followers count
       type: Number,
       default: 0, // Default to 0
     },
     followingCount: {
-      // New field for following count
+      // Field for following count
       type: Number,
       default: 0, // Default to 0
     },
+    followers: [
+      {
+        // Field to store user IDs of followers
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    following: [
+      {
+        // Field to store user IDs of the users this person is following
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     timestamps: true,

@@ -31,35 +31,73 @@ const getSingleUserFromDB = async (id: string) => {
 };
 
 const followUser = async (followerId: string, followingId: string) => {
-  // Increment followersCount for the following user
+  // Check if the follower is already following the following user
+  const alreadyFollowing = await User.findOne({
+    _id: followerId,
+    following: followingId,
+  });
+
+  if (alreadyFollowing) {
+    throw new Error('You are already following this user.');
+  }
+
+  // Increment followersCount for the following user and add followerId to their followers list
   const followedUser = await User.findByIdAndUpdate(
     followingId,
-    { $inc: { followersCount: 1 } },
+    {
+      $inc: { followersCount: 1 },
+      $addToSet: { followers: followerId }, // Ensure no duplicates
+    },
     { new: true }
   );
 
-  // Increment followingCount for the follower user
+  // Increment followingCount for the follower user and add followingId to their following list
   const followerUser = await User.findByIdAndUpdate(
     followerId,
-    { $inc: { followingCount: 1 } },
+    {
+      $inc: { followingCount: 1 },
+      $addToSet: { following: followingId }, // Ensure no duplicates
+    },
     { new: true }
   );
+
+  if (!followerUser || !followedUser) {
+    throw new Error('Error updating follower/following data');
+  }
 
   return { followedUser, followerUser };
 };
 
 const unfollowUser = async (followerId: string, followingId: string) => {
-  // Decrement followersCount for the following user
+  // Check if the user is actually following
+  const isFollowing = await User.exists({
+    _id: followerId,
+    following: followingId,
+  });
+
+  if (!isFollowing) {
+    throw new Error('You are not following this user');
+  }
+
+  // Decrement followersCount for the user being unfollowed (followingId)
+  // Remove the follower (followerId) from the user's followers array
   const unfollowedUser = await User.findByIdAndUpdate(
     followingId,
-    { $inc: { followersCount: -1 } },
+    {
+      $inc: { followersCount: -1 },
+      $pull: { followers: followerId },
+    },
     { new: true }
   );
 
-  // Decrement followingCount for the follower user
+  // Decrement followingCount for the user who unfollows (followerId)
+  // Remove the followed user (followingId) from the follower's following array
   const unfollowerUser = await User.findByIdAndUpdate(
     followerId,
-    { $inc: { followingCount: -1 } },
+    {
+      $inc: { followingCount: -1 },
+      $pull: { following: followingId },
+    },
     { new: true }
   );
 
@@ -119,8 +157,8 @@ export const UserServices = {
   createUser,
   getAllUsersFromDB,
   getSingleUserFromDB,
-  followUser, // Add this line
-  unfollowUser, // Add this line
+  followUser,
+  unfollowUser,
   blockUser,
   deleteUser,
   updateUser,

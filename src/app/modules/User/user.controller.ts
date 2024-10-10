@@ -37,8 +37,8 @@ const getSingleUser = catchAsync(async (req, res) => {
 });
 
 const followUser = catchAsync(async (req, res) => {
-  const { followingId } = req.body; // Expecting body to have followingId
-  const followerId = req.user.id; // Assuming user ID is available in req.user
+  const { followingId } = req.body;
+  const followerId = req.params.id;
 
   const result = await UserServices.followUser(followerId, followingId);
 
@@ -51,8 +51,8 @@ const followUser = catchAsync(async (req, res) => {
 });
 
 const unfollowUser = catchAsync(async (req, res) => {
-  const { followingId } = req.body; // Expecting body to have followingId
-  const followerId = req.user.id; // Assuming user ID is available in req.user
+  const { followingId } = req.body;
+  const followerId = req.params.id;
 
   const result = await UserServices.unfollowUser(followerId, followingId);
 

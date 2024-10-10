@@ -28,7 +28,6 @@ const getAllRecipes = catchAsync(async (req: Request, res: Response) => {
 const getMyRecipes = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params?.id;
 
-  console.log(userId);
   if (!userId) {
     throw new AppError(400, 'User not found or invalid token');
   }
@@ -202,7 +201,6 @@ const editCommentInRecipe = catchAsync(async (req: Request, res: Response) => {
       data: recipe,
     });
   } catch (error: any) {
-    console.log(error.message); // Log the error for debugging
     sendResponse(res, {
       success: false,
       statusCode: httpStatus.BAD_REQUEST,

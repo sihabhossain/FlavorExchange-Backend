@@ -17,8 +17,12 @@ router.post(
 );
 router.get('/', UserControllers.getAllUsers);
 router.get('/:id', UserControllers.getSingleUser);
-router.post('/follow', auth(USER_ROLE.USER), UserControllers.followUser);
-router.post('/unfollow', auth(USER_ROLE.USER), UserControllers.unfollowUser);
+router.post('/follow/:id', auth(USER_ROLE.USER), UserControllers.followUser);
+router.post(
+  '/unfollow/:id',
+  auth(USER_ROLE.USER),
+  UserControllers.unfollowUser
+);
 router.put('/block/:userId', auth(USER_ROLE.ADMIN), UserControllers.blockUser);
 router.delete(
   '/delete/:userId',
