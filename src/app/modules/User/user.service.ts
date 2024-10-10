@@ -3,6 +3,7 @@ import { QueryBuilder } from '../../builder/QueryBuilder';
 import { UserSearchableFields } from './user.constant';
 import { TUser } from './user.interface';
 import { User } from './user.model';
+import config from '../../config';
 
 const createUser = async (payload: TUser) => {
   const user = await User.create(payload);
@@ -89,7 +90,7 @@ const updateUser = async (userId: string, updateData: Partial<TUser>) => {
   return updatedUser;
 };
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+const stripeSecretKey = config.stripe_secret_key;
 
 if (!stripeSecretKey) {
   throw new Error('Stripe secret key is not defined in environment variables.');

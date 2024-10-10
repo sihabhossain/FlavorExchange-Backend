@@ -14,6 +14,7 @@ const getAllRecipesFromDB = async () => {
     .populate({
       path: 'comments.userId',
     })
+    .sort({ upvotes: -1 }) // Sort by upvotes in descending order
     .exec();
 
   return recipes;
