@@ -128,23 +128,24 @@ const editCommentInRecipe = async (
   // Find the recipe by ID
   const recipe = await Recipe.findById(recipeId);
   if (!recipe) {
-    throw new Error('Recipe not found'); // Better error handling
+    throw new Error('Recipe not found');
   }
 
   // Find the comment by its ID
-  const comment = recipe.comments.find((c) => c.id === commentId); // Accessing comment by id
+  const comment = recipe.comments.find((c) => c.id.toString() === commentId);
+
   if (!comment) {
-    throw new Error('Comment not found'); // Better error handling
+    throw new Error('Comment not found');
   }
 
   // Ensure the comment belongs to the user
-  if (comment.userId !== userId) {
-    throw new Error('User not authorized to edit this comment'); // User authorization check
+  if (comment.userId.toString() !== userId) {
+    throw new Error('User not authorized to edit this comment');
   }
 
   // Update the comment
-  comment.comment = updatedComment;
-  comment.updatedAt = new Date(); // Update timestamp
+  comment.comment = updatedComment; // Ensure updatedComment contains `comment`
+  comment.updatedAt = new Date();
 
   // Save the recipe with the updated comment
   return await recipe.save();
@@ -167,8 +168,8 @@ const deleteCommentFromRecipe = async (
   }
 
   const comment = recipe.comments[commentIndex];
-  if (comment.userId !== userId) {
-    throw new Error('User not authorized to delete this comment'); // Check if the user is authorized
+  if (comment.userId.toString() !== userId) {
+    throw new Error('User not authorized to edit this comment'); // User authorization check
   }
 
   recipe.comments.splice(commentIndex, 1); // Remove the comment from the array
