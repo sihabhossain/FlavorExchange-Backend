@@ -31,6 +31,7 @@ const RecipeSchema = new Schema<IRecipe>({
   comments: { type: [CommentSchema], default: [] },
   createdAt: { type: Date, default: Date.now },
   averageRating: { type: Number, default: null },
+  category: { type: String },
 });
 
 // Create and export the Recipe model

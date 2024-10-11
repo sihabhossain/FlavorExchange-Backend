@@ -14,6 +14,7 @@ const baseRecipeSchema = z.object({
   userId: z.string().nonempty('User ID is required'),
   ratings: z.array(z.number().min(1).max(5)).optional(),
   comments: z.array(z.string()).optional(),
+  category: z.string().nonempty('Title is required'),
   createdAt: z
     .preprocess(
       (value) => (typeof value === 'string' ? new Date(value) : value),

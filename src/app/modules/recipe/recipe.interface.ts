@@ -26,4 +26,5 @@ export interface IRecipe extends Document {
   comments: IComment[];
   createdAt: Date;
   averageRating?: number;
+  category: string;
 }
