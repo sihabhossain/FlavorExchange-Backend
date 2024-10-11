@@ -138,9 +138,14 @@ const downvoteRecipe = catchAsync(async (req: Request, res: Response) => {
 });
 
 const rateRecipe = catchAsync(async (req: Request, res: Response) => {
+  // Extract rating data from the request body
   const ratingData = req.body; // Expecting { userId: string, rating: number }
+
+  // Call the service to rate the recipe
   const recipe = await RecipeServices.rateRecipe(req.params.id, ratingData);
+
   if (!recipe) {
+    // If the recipe is not found, respond with a not found error
     return sendResponse(res, {
       success: false,
       statusCode: httpStatus.NOT_FOUND,
@@ -149,6 +154,7 @@ const rateRecipe = catchAsync(async (req: Request, res: Response) => {
     });
   }
 
+  // Respond with a success message and the updated recipe data
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

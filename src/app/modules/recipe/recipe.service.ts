@@ -68,21 +68,23 @@ const rateRecipe = async (
   id: string,
   rating: { userId: string; rating: number }
 ) => {
+  // Find the recipe by its ID
   const recipe = await Recipe.findById(id);
-  if (!recipe) return null;
+  if (!recipe) return null; // Return null if the recipe is not found
 
   // Initialize ratings array if not present
   recipe.ratings = recipe.ratings || [];
 
-  // Check if the user has already rated
+  // Check if the user has already rated the recipe
   const existingRatingIndex = recipe.ratings.findIndex(
     (r) => r.userId === rating.userId
   );
+
   if (existingRatingIndex > -1) {
-    // Update the existing rating
+    // If user has rated before, update the existing rating
     recipe.ratings[existingRatingIndex].rating = rating.rating;
   } else {
-    // Add new rating to the array
+    // If user has not rated yet, add new rating to the array
     recipe.ratings.push(rating);
   }
 
@@ -93,10 +95,10 @@ const rateRecipe = async (
   );
   const averageRating = totalRatings / recipe.ratings.length;
 
-  // Update average rating field if you have one
+  // Update the average rating field in the recipe document
   recipe.averageRating = averageRating; // Ensure this field exists in your schema
 
-  return await recipe.save();
+  return await recipe.save(); // Save the updated recipe document
 };
 
 // Add a comment to a recipe

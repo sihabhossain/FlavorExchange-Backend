@@ -2,11 +2,13 @@
 import mongoose, { Schema, model } from 'mongoose';
 import { IRecipe } from './recipe.interface';
 
+// Define the Rating schema
 const RatingSchema = new Schema({
   userId: { type: String, required: true },
-  rating: { type: Number, required: true },
+  rating: { type: Number, required: true, min: 1, max: 5 },
 });
 
+// Define the Comment schema
 const CommentSchema = new Schema({
   id: { type: String, required: true },
   userId: {
@@ -19,6 +21,7 @@ const CommentSchema = new Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
+// Define the Recipe schema
 const RecipeSchema = new Schema<IRecipe>({
   title: { type: String, required: true },
   ingredients: { type: [String], required: true },
