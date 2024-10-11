@@ -23,7 +23,7 @@ app.use('/api/v1', routes);
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.OK).json({
     success: true,
-    message: 'Welcome to the Lost And Found API',
+    message: 'Welcome to the flavor exchange server',
   });
 });
 
