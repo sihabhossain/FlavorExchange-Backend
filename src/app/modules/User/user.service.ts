@@ -146,8 +146,8 @@ const createCheckoutSession = async (payload: { priceId: string }) => {
       },
     ],
     mode: 'payment',
-    success_url: `${config.stripe_success_url}`,
-    cancel_url: `${config.stripe_cancel_url}`,
+    success_url: `https://flavor-exchange.netlify.app/dashboard/stripe/success`,
+    cancel_url: `https://flavor-exchange.netlify.app/dashboard/stripe/cancel`,
   });
 
   return session;
